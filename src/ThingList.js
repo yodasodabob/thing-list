@@ -8,7 +8,7 @@ const ThingList = (props) => {
             { 
              Object
                 .keys(props.things)
-                .map(thingID => <Thing thing={props.things[thingID]} key={key}/>)
+                .map(thingID => <Thing thing={props.things[thingID]} key={thingID}/>)
              }
         </ul>
     )
