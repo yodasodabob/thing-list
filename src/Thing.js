@@ -6,7 +6,7 @@ import './Thing.css'
 
 class Thing extends Component {
     componentDidMount(){
-        if (!this.nameInput.htmlEL.textContent) {
+        if (!this.nameInput.htmlEl.textContent) {
             this.nameInput.htmlEl.focus()
         }
     }
