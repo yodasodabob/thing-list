@@ -1,14 +1,26 @@
-.actions button {
+.Actions {
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  opacity: 0;
+  margin: -10px 0;
+}
+
+.Thing:hover .Actions {
+  opacity: 1;
+}
+
+.Actions button {
   border: 0;
   background: transparent;
   color: #999;
   font-size: 1.5rem;
 }
 
-.actions button:hover {
+.Actions button:hover {
   color: black;
 }
 
-.actions button.remove:hover {
+.Actions button.remove:hover {
   color: #AD343E;
 }

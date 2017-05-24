@@ -6,7 +6,9 @@ import './Thing.css'
 
 class Thing extends Component {
     componentDidMount(){
-        this.nameInput.htmlEl.focus()
+        if (!this.nameInput.htmlEL.textContent) {
+            this.nameInput.htmlEl.focus()
+        }
     }
 
     updateName = (ev) => {
@@ -32,7 +34,7 @@ class Thing extends Component {
                 className="name"
                 html={thing.name}
                 onChange={this.updateName}
-                onKeyPress={this.blueOnEnter}
+                onKeyPress={this.blurOnEnter}
                 ref={input => this.nameInput = input}
                 />
                 <Actions thing={thing} removeThing={removeThing}/>
