@@ -3,6 +3,8 @@ import './App.css';
 import Header from './Header'
 import ThingList from './ThingList'
 import AddThingButton from './AddThingButton'
+import SignIn from './SignIn'
+import SignOut from './SignOut'
 import base from './base'
 
 class App extends Component {
@@ -65,6 +67,7 @@ componentWillMount() {
     return (
       <div className="App">
         <Header />
+        <SignIn />
         <AddThingButton addThing={this.addThing} />
         <ThingList
           things={this.state.things}
