@@ -1,32 +1,51 @@
 import React, { Component } from 'react';
+
 import './App.css';
 import Header from './Header'
 import ThingList from './ThingList'
 import AddThingButton from './AddThingButton'
 import SignIn from './SignIn'
 import SignOut from './SignOut'
-import base from './base'
+import base, { auth } from './base'
 
 class App extends Component {
-componentWillMount() {
-  base.syncState(
-    'things',
-    {
-      context: this,
-      state: 'things'
+  state = {
+    things: {},
+    uid: null
+  }
 
-    })
+  componentWillMount() {
+    auth.onAuthStateChanged(
+      (user) => {
+        if (user) {
+          this.authHandler({ user: user})
+        }
+      }
+    )
+  }
+
+setUpThings () {
+  this.ref = base.syncState(
+      'things',
+      {
+        context: this,
+        state: 'things'
+      }
+    )
 }
 
-  state = {
-    things: {}
+  authHandler = (authData) => {
+    this.setState(
+      { uid: authData.user.uid },
+      this.setUpThings())
   }
+
 
   thing() {
     return {
       id: `thing-${Date.now()}`,
       name: '',
-      complete: false,
+      completed: false,
       dueOn: '',
     }
   }
@@ -50,30 +69,37 @@ componentWillMount() {
     this.setState({ things })
   }
 
-  completeThing = (thing) => {
-    const things = {...this.state.things}
-    const modThing = things[thing.id]
-    modThing.complete = !modThing.complete
-    this.setState({ things })
+  signOut = () => {
+    auth.signOut()
+    .then(() => this.setState({ uid: null}))
   }
 
-  render() {
+  renderThings() {
     const actions = {
       saveThing: this.saveThing,
       removeThing: this.removeThing,
-      completeThing: this.completeThing,
     }
 
-    return (
-      <div className="App">
-        <Header />
-        <SignIn />
+    return(
+      <div>
+        <SignOut signOut={this.signOut} />
         <AddThingButton addThing={this.addThing} />
         <ThingList
           things={this.state.things}
           {...actions}
+          />
+      </div>
+    )
+  }
 
-        />
+  render() {
+    
+
+    return (
+      <div className="App">
+        <Header />
+        { this.state.uid ? this.renderThings() : <SignIn authHandler={this.authHandler}/> }
+        
       </div>
     );
   }
