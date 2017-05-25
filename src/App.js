@@ -24,6 +24,7 @@ componentWillMount() {
     return {
       id: `thing-${Date.now()}`,
       name: '',
+      complete: false,
     }
   }
 
@@ -46,10 +47,18 @@ componentWillMount() {
     this.setState({ things })
   }
 
+  completeThing = (thing) => {
+    const things = {...this.state.things}
+    const modThing = things[thing.id]
+    modThing.complete = !modThing.complete
+    this.setState({ things })
+  }
+
   render() {
     const actions = {
       saveThing: this.saveThing,
       removeThing: this.removeThing,
+      completeThing: this.completeThing,
     }
 
     return (
@@ -59,6 +68,7 @@ componentWillMount() {
         <ThingList
           things={this.state.things}
           {...actions}
+
         />
       </div>
     );
