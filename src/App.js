@@ -25,6 +25,7 @@ componentWillMount() {
       id: `thing-${Date.now()}`,
       name: '',
       complete: false,
+      dueOn: '',
     }
   }
 
